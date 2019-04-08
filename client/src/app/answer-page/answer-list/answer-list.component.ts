@@ -48,6 +48,7 @@ export class AnswerListComponent implements OnDestroy, AfterViewInit {
       error => MaterialService.toast(error.error.message),
       () => {
         this.modal.close()
+        
       }
     )
 

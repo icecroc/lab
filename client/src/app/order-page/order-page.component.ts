@@ -2,9 +2,11 @@ import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from
 import {Router, NavigationEnd} from '@angular/router'
 import {MaterialInstance, MaterialService} from '../shared/classes/material.service'
 import {OrderService} from './order.service'
-import {Order, OrderPosition} from '../shared/interfaces'
+import {CategoriesService} from '../shared/services/categories.service'
+import {Order, OrderPosition, Category} from '../shared/interfaces'
 import {OrdersService} from '../shared/services/orders.service'
 import {Subscription, Observable} from 'rxjs'
+import {map} from 'rxjs/operators'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -19,17 +21,25 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   form: FormGroup
   modal: MaterialInstance
   oSub: Subscription
+  catSub: Subscription
   isRoot: boolean
   pending = false
+  link: string
+  catName: string
+  cat: Observable<Category>
+
 
   constructor(private router: Router,
               private order: OrderService,
-              private ordersService: OrdersService) {
+              private ordersService: OrdersService,
+              private categoriesService: CategoriesService) {
   }
 
   
-
+  
   ngOnInit() {
+    this.link = this.router.url
+    console.log(this.link)
     this.isRoot = this.router.url === '/order'
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -65,9 +75,11 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   submit() {
+    let lastValue: string
+    lastValue = localStorage.getItem('catName')
     this.pending = true
     const order: Order = {
-      name: this.form.value.name,
+      name: `${lastValue} от ${this.form.value.name}`,
       orderStatus: "Открыта",
       list: this.order.list.map(item => {
         delete item._id
