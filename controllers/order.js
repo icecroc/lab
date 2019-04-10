@@ -52,7 +52,7 @@ module.exports.getAll = async function(req, res) {
 
 module.exports.getClosed = async function(req, res) {
   const query = {
-    //user: req.user.id
+    user: req.user.id,
     orderStatus: "Закрыта"
   }
 

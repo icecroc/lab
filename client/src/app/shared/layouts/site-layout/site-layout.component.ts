@@ -36,6 +36,7 @@ export class SiteLayoutComponent implements OnInit  {
         case '1': {
           this.links = [
             {url: '/history', name: 'Архив'},
+            {url: '/closed', name: 'Закрытые заявки'},
             {url: '/order', name: 'Добавить заявку'},
             //{url: '/order/5c905f8f3eb78205a60e02fa', name: 'Масло'},
             //{url: '/order/5c9060c03eb78205a60e030f', name: 'Смазки'}
@@ -46,7 +47,6 @@ export class SiteLayoutComponent implements OnInit  {
         case '2': {
           this.links = [
             {url: '/history', name: 'Архив'},
-            {url: '/closed', name: 'Закрытые заявки'},
             {url: '/answer', name: 'Открытые заявки'}
           ]
           console.log(this.links)

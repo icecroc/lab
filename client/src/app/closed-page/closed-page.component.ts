@@ -28,17 +28,21 @@ export class ClosedPageComponent implements OnInit, OnDestroy, AfterViewInit {
   reloading = false
   noMoreOrders = false
 
+  
+
   constructor(private ordersService: OrdersService) {
   }
 
   ngOnInit() {
+    this.filter.userName = localStorage.getItem('email')
+    console.log(localStorage.getItem('email'))
     this.orders$ = this.ordersService.fetch()
     this.reloading = true
     this.fetch()
   }
 
   private fetch() {
-    const params = Object.assign({}, this.filter, {
+    const params = Object.assign({}, this.filter, {      
       offset: this.offset,
       limit: this.limit
     })

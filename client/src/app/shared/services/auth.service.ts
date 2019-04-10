@@ -18,13 +18,14 @@ export class AuthService {
     return this.http.post<User>('/api/auth/register', user)
   }
 
-  login(user: User): Observable<{token: string, perms:string}> {
-    return this.http.post<{token: string, perms:string}>('/api/auth/login', user)
+  login(user: User): Observable<{token: string, perms:string, email:string}> {
+    return this.http.post<{token: string, perms:string, email:string}>('/api/auth/login', user)
       .pipe(
         tap(
-          ({token, perms}) => {
+          ({token, perms, email}) => {
             localStorage.setItem('auth-token', token)
             localStorage.setItem('perms', perms)
+            localStorage.setItem('email', email)
             this.setToken(token)
           }
         )

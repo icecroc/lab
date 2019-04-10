@@ -43,11 +43,7 @@ export class HistoryListComponent implements OnDestroy, AfterViewInit {
 
     if (decision) {
       this.ordersService.delete(this.selectedOrder._id)
-        .subscribe(
-          response => MaterialService.toast(response.description),
-          error => MaterialService.toast(error.error.message),
-          () => window.location.reload()
-        )
+        .subscribe()
     }
   }
 
