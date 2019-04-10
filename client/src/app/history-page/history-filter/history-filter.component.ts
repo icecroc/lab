@@ -18,6 +18,7 @@ export class HistoryFilterComponent implements OnDestroy, AfterViewInit {
   order: number
   userName: string
   endUserName: string
+  catName: string
 
   isValid = true
 
@@ -61,6 +62,10 @@ export class HistoryFilterComponent implements OnDestroy, AfterViewInit {
 
     if (this.endUserName) {
       filter.endUserName = this.endUserName
+    }
+
+    if (this.catName) {
+      filter.catName = this.catName
     }
 
     this.onFilter.emit(filter)

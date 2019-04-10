@@ -6,6 +6,9 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  catName: {
+    type: String
+  },
   name: {
     type: String
   },

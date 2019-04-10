@@ -79,6 +79,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
     lastValue = localStorage.getItem('catName')
     this.pending = true
     const order: Order = {
+      catName: lastValue,
       name: `${lastValue} от ${this.form.value.name}`,
       orderStatus: "Открыта",
       list: this.order.list.map(item => {
@@ -86,8 +87,8 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
         return item
       })
     }
-
-    this.oSub = this.ordersService.create(order).subscribe(
+    if (this.form.value.name) {
+      this.oSub = this.ordersService.create(order).subscribe(
       newOrder => {
         MaterialService.toast(`Заказ №${newOrder.order} был добавлен.`)
         this.order.clear()
@@ -96,8 +97,14 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
       () => {
         this.modal.close()
         this.pending = false
+        this.router.navigate(['/order'])
       }
     )
+    } else {
+      MaterialService.toast("Заполните номер партии")
+      this.pending = false
+    }
+    
   }
 
 }

@@ -51,9 +51,5 @@ export class ClosedListComponent implements OnDestroy, AfterViewInit {
         this.modal.close()
       }
     )
-
   }
-
-
-
 }

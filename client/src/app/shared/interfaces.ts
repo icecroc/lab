@@ -28,6 +28,7 @@ export interface Position {
 
 export interface Order {
   orderStatus: string
+  catName: string
   name: string
   date?: Date
   endDate?: Date
@@ -48,6 +49,7 @@ export interface Filter {
   end?: Date
   order?: number
   cat?: string
+  catName?: string
   userName?: string
   endUserName?: string
 }

@@ -28,6 +28,14 @@ module.exports.getAll = async function(req, res) {
     query.order = +req.query.order
   }
 
+  if (req.query.userName) {
+    query.userName = req.query.userName
+  }
+
+  if (req.query.catName) {
+    query.catName = req.query.catName
+  }
+
   try {
     const orders = await Order
       .find(query)
@@ -66,6 +74,18 @@ module.exports.getClosed = async function(req, res) {
 
   if (req.query.order) {
     query.order = +req.query.order
+  }
+
+  if (req.query.userName) {
+    query.userName = req.query.userName
+  }
+
+  if (req.query.endUserName) {
+    query.endUserName = req.query.endUserName
+  }
+
+  if (req.query.catName) {
+    query.catName = req.query.catName
   }
 
   try {
@@ -116,6 +136,10 @@ module.exports.getArchived = async function(req, res) {
     query.endUserName = req.query.endUserName
   }
 
+  if (req.query.catName) {
+    query.catName = req.query.catName
+  }
+
   try {
     const orders = await Order
       .find(query)
@@ -140,7 +164,7 @@ module.exports.create = async function(req, res) {
     const maxOrder = lastOrder ? lastOrder.order : 0
 
     const order = await new Order({
-      
+      catName: req.body.catName,
       name: req.body.name,
       list: req.body.list,
       user: req.user,
@@ -149,6 +173,17 @@ module.exports.create = async function(req, res) {
     }).save()
 
     res.status(201).json(order)
+  } catch (e) {
+    errorHandler(res, e)
+  }
+}
+
+module.exports.remove = async function(req, res) {
+  try {
+    await Order.remove({_id: req.params.id})
+    res.status(200).json({
+      message: 'Заявка удалена.'
+    })
   } catch (e) {
     errorHandler(res, e)
   }
@@ -173,3 +208,4 @@ module.exports.update = async function(req, res) {
     errorHandler(res, e)
   }
 }
+
