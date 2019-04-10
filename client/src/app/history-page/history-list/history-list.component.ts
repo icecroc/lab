@@ -1,10 +1,9 @@
 import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core'
-import {Order} from '../../shared/interfaces'
+import {Order, Message} from '../../shared/interfaces'
 import {MaterialInstance, MaterialService} from '../../shared/classes/material.service'
 import { Subscription } from 'rxjs';
 import { OrdersService } from 'src/app/shared/services/orders.service';
 import { Router } from '@angular/router';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 
 @Component({
@@ -16,7 +15,7 @@ export class HistoryListComponent implements OnDestroy, AfterViewInit {
   @Input() orders: Order[]
   @ViewChild('modal') modalRef: ElementRef
 
-  constructor(private ordersService: OrdersService, private router: Router) {}
+  constructor(private ordersService: OrdersService, private message: Message) {}
 
   oSub : Subscription
   selectedOrder: Order
@@ -45,7 +44,7 @@ export class HistoryListComponent implements OnDestroy, AfterViewInit {
     if (decision) {
       this.ordersService.delete(this.selectedOrder._id)
         .subscribe(
-          response => MaterialService.toast(response.message),
+          response => MaterialService.toast(this.message.message),
           error => MaterialService.toast(error.error.message),
           () => window.location.reload()
         )
